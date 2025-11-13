@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class ="logo">
+            <img src="https://th.bing.com/th/id/OIP.rGjgOyFefrqKujsWvUoj9QHaFF?w=256&h=180&c=7&r=0&o=7&cb=12&dpr=1.3&pid=1.7&rm=3" style="width: 100%; border-radius: 600%;"   alt = "logo">
+            <h1>zomoto online foods </h1>
+        </div>
+        <div class = "header-buttons">
+            <button class="header-btn" title="cart">
+               
+                <i class="fa-solid fa-home"></i> home
+            </button>
+            <button class="header-btn" title="settings">
+                <i class="fa-solid fa-gear"></i> settings
+            </button>
+            <button class="header-btn" title="account">
+                <i class="fa-solid fa-user"></i> account
+            </button>
+            
+        </div>
+    </header>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#order">Order</a></li>
+            <li><a href="#about">About us</a></li>
+        </ul>
+    </nav>
+    <main>
+        
+        <section class="moto" id="home">
+            <h3>HOME</h3>
+                <ul>
+                    <li>Welcome to zomoto online food ordering website.</li>
+                    <li>We provide a variety of delicious meals to satisfy your cravings.</li>
+                    <li>Browse our menu, place your order, and enjoy your meal!</li>
+                </ul>
+            </section>
+            <section class="menu" id="menu">
+                <h3>MENU</h3>
+                    <ul>
+                        <li>BIRIYANI</li>
+                        <li>FRIED RICE</li>
+                        <li>NOODLES</li>
+                        <li>CURRY</li>
+                        <li>STARTERS</li>
+                    </ul>
+                </section>
+                <section class="order" id="order">
+                    <h3>ORDER</h3>
+
+                    <div class="order-panel">
+                        <label for="customer-name">Name</label><br>
+                        <input type="text" id="customer-name" placeholder="Enter your name" style="width:100%;max-width:480px;margin-bottom:12px;">
+
+                        <label for="food-item">Select Food Item</label><br>
+                        <select id="food-item" style="max-width:320px;margin-bottom:12px;">
+                            <option value="biriyani" data-price="150">BIRIYANI - $150</option>
+                            <option value="fried-rice" data-price="120">FRIED RICE - $120</option>
+                            <option value="noodles" data-price="100">NOODLES - $100</option>
+                            <option value="curry" data-price="90">CURRY - $90</option>
+                            <option value="starters" data-price="80">STARTERS - $80</option>
+                        </select>
+
+                        <label for="quantity">Quantity</label><br>
+                        <input type="number" id="quantity" min="1" value="1" style="width:80px;margin-bottom:12px;">
+
+                        <div style="margin-bottom:14px;">
+                            <button id="btnAdd" type="button" class="header-btn">Add to cart</button>
+                            <button id="btnClear" type="button" class="header-btn" style="margin-left:8px;background:#fff">Clear</button>
+                        </div>
+
+                        <h4>Your cart</h4>
+                        <div class="cart-wrap">
+                            <table id="cart-table" class="cart-table">
+                                <thead>
+                                    <tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th><th></th></tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" style="text-align:right;font-weight:600;">Subtotal</td>
+                                        <td id="subtotal">$0.00</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div style="margin-top:12px;">
+                            <button id="btnPlace" type="button" class="header-btn">Place Order</button>
+                        </div>
+                    </div>
+
+                        <section class="about" id="about">
+                            <h3>ABOUT US</h3>
+                            <P> 
+                                <ul TYPE="DISC">
+                                    <li>Zomoto is a leading online food ordering platform that connects customers with a wide range of restaurants.</li>
+                                    <li>Our mission is to provide a seamless and convenient food ordering experience for our users.</li>
+                                    <li>We are committed to delivering quality food and excellent customer service.</li>
+                                </ul>
+                            </P>
+                            </section>
+
+
+
+
+    </main>
+
+    <footer></footer>
+        <script>
+        (function(){
+            const btnAdd = document.getElementById('btnAdd');
+            const btnClear = document.getElementById('btnClear');
+            const btnPlace = document.getElementById('btnPlace');
+            const foodSelect = document.getElementById('food-item');
+            const qtyInput = document.getElementById('quantity');
+            const cartTbody = document.querySelector('#cart-table tbody');
+            const subtotalEl = document.getElementById('subtotal');
+
+            function formatMoney(n){ return '$' + n.toFixed(2); }
+
+            function updateSubtotal(){
+                let sum=0;
+                cartTbody.querySelectorAll('tr').forEach(tr=>{
+                    const total = parseFloat(tr.dataset.total) || 0;
+                    sum += total;
+                });
+                subtotalEl.textContent = formatMoney(sum);
+            }
+
+            btnAdd.addEventListener('click', ()=>{
+                const opt = foodSelect.options[foodSelect.selectedIndex];
+                const name = opt.text.split(' - ')[0];
+                const price = parseFloat(opt.dataset.price) || 0;
+                const qty = Math.max(1, parseInt(qtyInput.value) || 1);
+                const lineTotal = price * qty;
+                const tr = document.createElement('tr');
+                tr.dataset.total = lineTotal;
+                tr.innerHTML = `<td>${name}</td><td>${formatMoney(price)}</td><td>${qty}</td><td>${formatMoney(lineTotal)}</td><td><button class="remove-btn" type="button">Remove</button></td>`;
+                cartTbody.appendChild(tr);
+                tr.querySelector('.remove-btn').addEventListener('click', ()=>{ tr.remove(); updateSubtotal(); });
+                updateSubtotal();
+            });
+
+            btnClear.addEventListener('click', ()=>{ cartTbody.innerHTML=''; updateSubtotal(); });
+
+            btnPlace.addEventListener('click', ()=>{
+                const customer = document.getElementById('customer-name').value.trim();
+                if(!customer){ alert('Please enter your name'); return; }
+                const rows = cartTbody.querySelectorAll('tr');
+                if(rows.length===0){ alert('Cart is empty'); return; }
+                let summary = `Order for ${customer}:\n`;
+                let total=0;
+                rows.forEach(tr=>{
+                    const item = tr.children[0].textContent;
+                    const qty = tr.children[2].textContent;
+                    const line = tr.children[3].textContent;
+                    summary += `${item} x${qty} = ${line}\n`;
+                    total += parseFloat(tr.dataset.total) || 0;
+                });
+                summary += `Subtotal: ${formatMoney(total)}\n\nThank you!`;
+                alert(summary);
+                cartTbody.innerHTML=''; updateSubtotal(); document.getElementById('customer-name').value='';
+            });
+        })();
+        </script>
+</body>
+</html>

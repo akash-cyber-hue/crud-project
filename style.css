@@ -1,0 +1,50 @@
+/* Basic page reset and typography */
+* { box-sizing: border-box; }
+body { font-family: Arial, Helvetica, sans-serif; margin: 0; line-height: 1.4; }
+header { display:flex; justify-content:space-between; align-items:center; padding:12px 20px; background:#fff; border-bottom:1px solid #eee; }
+.logo { display:flex; align-items:center; gap:12px; }
+.logo img { width:60px; height:60px; object-fit:cover; }
+
+/* Header buttons */
+.header-buttons { display:flex; gap:20px; }
+.header-btn { padding:8px 12px; border:1px solid #ccc; background:#f8f8f8; cursor:pointer; border-radius:4px; }
+
+/* Navbar */
+.navbar { background:#333; }
+.navbar ul { list-style:none; margin:0; padding:0; display:flex; gap:0; }
+.navbar li { }
+.navbar a { display:block; padding:12px 18px; color:#fff; text-decoration:none; }
+.navbar a:hover { background:#444; }
+
+/* Make navbar sticky */
+.navbar { position:sticky; top:0; z-index:1000; }
+
+/* Sections */
+main { padding:20px; }
+section { margin-bottom:28px; }
+
+/* Simple responsive behaviour */
+@media (max-width:600px){
+    header { flex-direction:column; align-items:flex-start; }
+    .navbar ul { flex-direction:column; }
+}
+header img{
+    border-radius: 200px;
+    width: 200px;
+}
+header h1{
+    display: flex;
+    justify-content: center; /* centers text horizontally */
+    width: 100%;
+    align-items:center;
+}
+h2{ color: darkkhaki; }
+
+/* Order/cart styles */
+.order-panel { margin-top:12px; }
+.cart-wrap { overflow-x:auto; max-width:100%; }
+.cart-table { width:100%; max-width:760px; border-collapse:collapse; margin-top:8px; }
+.cart-table th, .cart-table td { border:1px solid #e6e6e6; padding:8px; text-align:left; }
+.cart-table thead { background:#fafafa; }
+.remove-btn { background:#ff6b6b; color:#fff; border:none; padding:6px 8px; border-radius:4px; cursor:pointer; }
+.remove-btn:hover { opacity:0.9; }
